@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using lib;
+using Microsoft.EntityFrameworkCore;
 
 namespace web
 {
@@ -25,7 +27,9 @@ namespace web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
+            services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
