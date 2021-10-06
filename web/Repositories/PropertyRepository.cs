@@ -30,18 +30,17 @@ namespace web
         Console.WriteLine($"property{property.Name} Owner: {ownerId}");
         Console.WriteLine($"DATABASE:{_db}");
         Console.WriteLine($"OwnersFromDatabase:{_db.Owners.Count()}");
-        foreach (var o in _db.Owners.ToList() )
-        {
-            if (o.Id == ownerId){Console.WriteLine($"OWNER {o.Id}");}
-        }
+       
 
-        var owner = _db.Owners.Where(own => own.Id == ownerId).SingleOrDefault();
+        var owner = _db.Owners.ToList().Where(own => own.Id == ownerId).SingleOrDefault();
         
         Console.WriteLine($"OWNER:::::: {owner.Id}");
         
         
         if(owner == null) return;
-        owner.Propertys.Add(property);
+        // owner.Propertys.Add(property);
+        property.Owner = owner;
+        _db.Add(property);
         await _db.SaveChangesAsync();
     }
 
