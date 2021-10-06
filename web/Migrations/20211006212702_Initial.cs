@@ -20,26 +20,25 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Propertys",
+                name: "Properties",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OwnerGuid = table.Column<Guid>(type: "TEXT", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: true),
-                    Zipcode = table.Column<int>(type: "INTEGER", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Zipcode = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Propertys", x => x.Id);
+                    table.PrimaryKey("PK_Properties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Propertys_Owners_OwnerId",
+                        name: "FK_Properties_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,16 +54,16 @@ namespace web.Migrations
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_Propertys_PropertyId",
+                        name: "FK_Reservations_Properties_PropertyId",
                         column: x => x.PropertyId,
-                        principalTable: "Propertys",
+                        principalTable: "Properties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Propertys_OwnerId",
-                table: "Propertys",
+                name: "IX_Properties_OwnerId",
+                table: "Properties",
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
@@ -79,7 +78,7 @@ namespace web.Migrations
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "Propertys");
+                name: "Properties");
 
             migrationBuilder.DropTable(
                 name: "Owners");

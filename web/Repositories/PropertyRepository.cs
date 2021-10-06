@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-
 namespace web
 {
     public class PropertyRepository : IPropertyRepository
@@ -12,33 +11,24 @@ namespace web
 
         public async Task<IEnumerable<Property>> GetAllPropertyAsync()
         {
-            return await _db.Propertys.ToListAsync();
+            return await _db.Properties.ToListAsync();
         }
-        public async Task<IEnumerable<Property>> GetAllPropertyByOwner(Guid ownerguid)
+        public async Task<IEnumerable<Property>> GetAllPropertyByOwner(Guid ownerid)
         {
-            return await _db.Propertys.Where(property => property.OwnerGuid == ownerguid).ToListAsync();
+            return await _db.Properties.Where(property => property.OwnerId == ownerid).ToListAsync();
         }
-
-
         public async Task<Property> GetByIdAsync(Guid id)
         {
-            return await _db.Propertys
+            return await _db.Properties
             .Where(property => property.Id == id)
             .Include(property => property.Reservations)
             .SingleOrDefaultAsync();
         }
-
-
         public async Task AddPropertyAsync(Property property)
         {
-            // var owner = _db.Owners.ToList().Where(own => own.Id == ownerId).SingleOrDefault();
-            // if(owner == null) return;
-            // // owner.Propertys.Add(property);
-            // property.Owner = owner;
             _db.Add(property);
             await _db.SaveChangesAsync();
         }
-
         public async Task SaveAsync()
         {
             await _db.SaveChangesAsync();
@@ -63,22 +53,20 @@ namespace web
         {
             _db = db;
         }
-           public async Task<IEnumerable<Property>> GetPropertyByCity(string city)
+        public async Task<IEnumerable<Property>> GetPropertyByCity(string city)
         {
-           // return await _db.Propertys.Where(property => property.City.IndexOf(city,StringComparison.OrdinalIgnoreCase) >=0).ToListAsync();
-            return await _db.Propertys.Where(property => property.City.Contains(city)).ToListAsync();
+            return await _db.Properties.Where(property => property.City.Contains(city)).ToListAsync();
         }
 
-   public async Task<IEnumerable<Property>> GetPropertyByState(string state)
+        public async Task<IEnumerable<Property>> GetPropertyByState(string state)
         {
-            return await _db.Propertys.Where(property => property.State.Contains(state)).ToListAsync();
+            return await _db.Properties.Where(property => property.State.Contains(state)).ToListAsync();
         }
 
-   public async Task<IEnumerable<Property>> GetPropertyByZip(int zip)
+        public async Task<IEnumerable<Property>> GetPropertyByZip(string zip)
         {
-            return await _db.Propertys.Where(property => property.Zipcode == zip).ToListAsync();
+            return await _db.Properties.Where(property => property.Zipcode == zip).ToListAsync();
         }
-
 
     }
 }

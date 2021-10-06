@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Text.Json;
-
 namespace web.Controllers
 {
     [ApiController]
-    [Route("api/househunt")]
+    [Route("api/properties")]
     public class HouseHuntController : ControllerBase
     {
         private IPropertyRepository _repository;
@@ -26,7 +25,7 @@ namespace web.Controllers
             // await _repository.SaveAsync();
             return CreatedAtAction("GetOne", new { property.Id }, property);
         }
-        [HttpGet("{id}/house")]
+        [HttpGet("house/{id}")]
         public async Task<IActionResult> GetOne(Guid id)
         {
             // 1. id fails validation, returns (400 Bad Request)
@@ -36,29 +35,29 @@ namespace web.Controllers
             return Ok(todo);
         }
 
-        [HttpGet("{ownerguid}/all")]
-        public async Task<IActionResult> GetAll(Guid ownerguid)
+        [HttpGet("all/{ownerid}")]
+        public async Task<IActionResult> GetAll(Guid ownerid)
         {
-            var allProperty = await _repository.GetAllPropertyByOwner(ownerguid);
+            var allProperty = await _repository.GetAllPropertyByOwner(ownerid);
 
             return Ok(allProperty);
         }
-        [HttpGet("{city}/house/city")]
+        [HttpGet("search/city/{city}")]
         public async Task<IActionResult> GetPropertyByCity(string city)
         {
             var propertyCity = await _repository.GetPropertyByCity(city);
 
             return Ok(propertyCity);
         }
-        [HttpGet("{state}/house/state")]
+        [HttpGet("search/state/{state}")]
         public async Task<IActionResult> GetPropertyByState(string state)
         {
             var propertyState = await _repository.GetPropertyByState(state);
 
             return Ok(propertyState);
         }
-        [HttpGet("{zip}/house/zip")]
-        public async Task<IActionResult> GetPropertyByZip(int zip)
+        [HttpGet("search/zip/{zip}")]
+        public async Task<IActionResult> GetPropertyByZip(string zip)
         {
             var propertyZip = await _repository.GetPropertyByZip(zip);
 

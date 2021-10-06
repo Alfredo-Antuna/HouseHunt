@@ -6,17 +6,12 @@ namespace web
     public class Owner
     {
         public Guid Id {get;set;}
-        public List<Property> Propertys {get;set;}
+        public List<Property> Properties {get;set;}
         public string Name {get;set;}
         public Owner()
         {
-            Propertys = new();
-        
+            Properties = new();
         }
-        // public Owner(OwnerDto OwnerDTO)
-        // {
-
-        // }
     }
 
 }
