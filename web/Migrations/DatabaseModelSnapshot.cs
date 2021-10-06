@@ -42,6 +42,9 @@ namespace web.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("OwnerGuid")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid?>("OwnerId")
                         .HasColumnType("TEXT");
 
@@ -82,11 +85,9 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Property", b =>
                 {
-                    b.HasOne("web.Owner", "Owner")
+                    b.HasOne("web.Owner", null)
                         .WithMany("Propertys")
                         .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("web.Reservation", b =>

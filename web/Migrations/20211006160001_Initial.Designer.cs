@@ -9,7 +9,7 @@ using web;
 namespace web.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20211005214641_Initial")]
+    [Migration("20211006160001_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,9 @@ namespace web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("OwnerGuid")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("OwnerId")
@@ -84,11 +87,9 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Property", b =>
                 {
-                    b.HasOne("web.Owner", "Owner")
+                    b.HasOne("web.Owner", null)
                         .WithMany("Propertys")
                         .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("web.Reservation", b =>

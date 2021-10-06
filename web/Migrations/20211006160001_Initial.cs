@@ -24,11 +24,12 @@ namespace web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    OwnerGuid = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: true),
-                    Zipcode = table.Column<int>(type: "INTEGER", nullable: false)
+                    Zipcode = table.Column<int>(type: "INTEGER", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

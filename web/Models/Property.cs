@@ -7,7 +7,7 @@ namespace web
     {
         public Guid Id {get;set;}
         public List<Reservation> Reservations {get;set;}
-        public Guid  OwnerId {get;set;}
+        public Guid OwnerGuid {get;set;}
         public string Name {get;set;}
         public string City {get;set;}
         public string State {get;set;}
@@ -21,6 +21,7 @@ namespace web
         public Property(PropertyDto propertyDto)
         {
            Id = Guid.NewGuid();
+           OwnerGuid= propertyDto.OwnerGuid; 
            Reservations = new();
            Name = propertyDto.Name;
            City = propertyDto.City;
